@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import config from '../../site.config.json';
+
+const articles = (await getCollection('articles'))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const categoryMap = Object.fromEntries(config.categories.map((c: any) => [c.slug, c.name]));
+---
+
+<BaseLayout title="Site niche informatif sur les camera nichoir" description="Le guide complet : Site niche informatif sur les camera nichoir">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <section class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-3">Site niche informatif sur les camera nichoir</h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">Le guide complet : Site niche informatif sur les camera nichoir</p>
+    </section>
+
+    <!-- Categories -->
+    <section class="flex flex-wrap justify-center gap-3 mb-10">
+      {config.categories.map((cat: any) => (
+        <a href={`/categorie/${cat.slug}`} class="px-4 py-2 rounded-full border hover:bg-primary hover:text-white hover:border-primary transition-colors text-sm">
+          {cat.name}
+        </a>
+      ))}
+    </section>
+
+    <!-- Articles -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {articles.map(article => (
+        <ArticleCard
+          title={article.data.title}
+          description={article.data.description}
+          slug={article.slug}
+          category={categoryMap[article.data.category]}
+          date={article.data.date}
+          image={article.data.image}
+        />
+      ))}
+    </section>
+
+    {articles.length === 0 && (
+      <p class="text-center text-gray-500 py-12">Aucun article pour le moment.</p>
+    )}
+  </div>
+</BaseLayout>

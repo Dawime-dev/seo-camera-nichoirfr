@@ -1,0 +1,16 @@
+---
+const navItems = [
+      { name: 'Accueil', href: '/' },
+];
+---
+
+<header class="border-b bg-white sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="text-xl font-bold text-primary">Site niche informatif sur les camera nichoir</a>
+    <nav class="hidden md:flex items-center gap-6">
+      {navItems.map(item => (
+        <a href={item.href} class="text-sm text-gray-600 hover:text-primary transition-colors">{item.name}</a>
+      ))}
+    </nav>
+  </div>
+</header>

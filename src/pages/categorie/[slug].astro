@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import config from '../../../site.config.json';
+
+export function getStaticPaths() {
+  return config.categories.map((cat: any) => ({
+    params: { slug: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+const articles = (await getCollection('articles'))
+  .filter(a => a.data.category === category.slug)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const categoryMap = Object.fromEntries(config.categories.map((c: any) => [c.slug, c.name]));
+---
+
+<BaseLayout title={category.name} description={category.description}>
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <header class="mb-8">
+      <nav class="text-sm text-gray-500 mb-4">
+        <a href="/" class="hover:text-primary">Accueil</a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-900">{category.name}</span>
+      </nav>
+      <h1 class="text-3xl font-bold">{category.name}</h1>
+      <p class="text-gray-600 mt-2">{category.description}</p>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {articles.map(article => (
+        <ArticleCard
+          title={article.data.title}
+          description={article.data.description}
+          slug={article.slug}
+          category={categoryMap[article.data.category]}
+          date={article.data.date}
+          image={article.data.image}
+        />
+      ))}
+    </section>
+
+    {articles.length === 0 && (
+      <p class="text-center text-gray-500 py-12">Aucun article dans cette catégorie.</p>
+    )}
+  </div>
+</BaseLayout>
