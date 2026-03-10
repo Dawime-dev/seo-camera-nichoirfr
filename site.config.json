@@ -1,9 +1,30 @@
 {
-    "name": "Site niche informatif sur les camera nichoir",
-    "description": "Le guide complet : Site niche informatif sur les camera nichoir",
+    "name": "Caméra Nichoir Expert",
+    "description": "Découvrez les meilleures caméras nichoir pour observer les oiseaux facilement.",
     "url": "https:\/\/camera-nichoir.fr",
-    "primaryColor": "#2563eb",
-    "categories": [],
+    "primaryColor": "#1a73e8",
+    "categories": [
+        {
+            "name": "Guide d'Achat",
+            "slug": "guide-d-achat",
+            "description": "Conseils pour choisir la meilleure caméra nichoir."
+        },
+        {
+            "name": "Avis et Tests",
+            "slug": "avis-et-tests",
+            "description": "Analyses détaillées et critiques de modèles de caméras."
+        },
+        {
+            "name": "Installation et Utilisation",
+            "slug": "installation-et-utilisation",
+            "description": "Comment installer et utiliser une caméra nichoir."
+        },
+        {
+            "name": "Actualités et Tendances",
+            "slug": "actualites-et-tendances",
+            "description": "Nouveautés sur les caméras nichoir et technologies."
+        }
+    ],
     "locale": "fr",
     "niche": "Site niche informatif sur les camera nichoir"
 }
